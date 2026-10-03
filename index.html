@@ -95,13 +95,40 @@ h1{margin:0;font-size:20px;font-weight:700;line-height:1.2}
 .lv-ok{background:var(--ok)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:14px;font-size:12px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
-.expbtn{margin-top:22px;display:block}
+.btnrow{display:flex;gap:8px;margin-top:22px}
+.btnrow button{flex:1}
 .expbox{margin-top:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
 .expbox p{margin:0 0 8px;font-size:13px;color:var(--muted);line-height:1.45}
 .expbox textarea{width:100%;box-sizing:border-box;height:96px;border:1px solid var(--line);background:var(--sunk);border-radius:8px;padding:8px;font-family:var(--mono);font-size:11px;color:var(--ink);resize:none}
 .expbox .btns2{display:flex;gap:8px;margin-top:8px}
-.expbox .btns2 button{flex:1}
-.expbtn+.danger{margin-top:16px}
+.expbox .btns2>*{flex:1;text-align:center}
+.filebtn{display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px}
+.btnrow+.expbox+.expbox+.danger,.expbox+.danger{margin-top:16px}
+.cbcards{display:flex;flex-direction:column;gap:10px}
+.cbcard{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.cbcard b{font-size:16px;display:block}
+.sub2{display:block;color:var(--muted);font-size:13px;margin:2px 0 8px;line-height:1.4}
+.cbhead{margin-bottom:10px}
+.rule p{margin:0 0 8px;font-size:14px;line-height:1.55}
+.rule p:last-child{margin-bottom:0}
+.rule .ex{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.rule .ex span{border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:13px;background:var(--paper)}
+.rule .ex b{font-size:20px;margin-right:4px}
+.items{display:flex;flex-wrap:wrap;gap:6px}
+.items span{border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:16px;background:var(--paper);color:var(--muted)}
+.items span.learn{border-color:var(--warn);color:var(--ink)}
+.items span.done{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+.opt.kw{font-size:22px;line-height:1.25}
+.kboxes>span{position:relative}
+.kboxes>span small{position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);font-family:var(--ui);font-size:8.5px;font-weight:700;letter-spacing:.04em;color:var(--muted);white-space:nowrap}
+.seqnav{display:grid;grid-template-columns:1fr 1.5fr;gap:8px;max-width:340px;margin:8px auto 0}
+.seqnav .ghostbtn{padding:10px 8px;font-size:13px}
+.nx{display:flex;gap:8px;position:sticky;bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:6;background:var(--paper);padding:8px 0 4px}
+.nx .ghostbtn{padding:12px 10px;font-size:14px}
+.nx .primary{padding:12px;font-size:15px}
+.wres>.primary[data-a="next"]{position:sticky;bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:6;box-shadow:0 -8px 10px -6px var(--paper)}
+.tab{font-size:10.5px}
+.score{font-size:44px;font-weight:700;text-align:center;margin:4px 0}
 .danger{margin-top:22px;background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;text-underline-offset:3px;padding:4px 0}
 .danger.armed{color:var(--bad);font-weight:700}
 .unlockbar{display:flex;align-items:center;gap:10px;margin:0 0 16px;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;font-size:13px}
@@ -213,7 +240,7 @@ h1{margin:0;font-size:20px;font-weight:700;line-height:1.2}
 .bigmeter i{display:block;height:100%;background:var(--accent)}
 
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:6px 16px calc(6px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center}
-.tabs .in{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;max-width:560px}
+.tabs .in{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;width:100%;max-width:560px}
 .tab{background:none;border:none;border-radius:10px;padding:6px 0;display:flex;flex-direction:column;align-items:center;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.02em;position:relative}
 .tab .ti{font-family:var(--kana-text);font-weight:600;font-size:22px;line-height:1.2}
 .tab[aria-selected="true"]{color:var(--accent);background:var(--accent-soft)}
@@ -273,11 +300,16 @@ h1{margin:0;font-size:20px;font-weight:700;line-height:1.2}
       <span><i class="dot lv-ok"></i>Dominat</span>
     </div>
     <p class="note">Un kana queda dominat quan l'encertes 3 cops seguits a Reconèixer i 3 cops seguits a Escriure. Toca el nom d'una fila per incloure-la o treure-la. Toca un kana per veure'n l'ordre dels traços.</p>
-    <button class="ghostbtn expbtn" id="exp">Exporta el progrés</button>
+    <div class="btnrow"><button class="ghostbtn" id="exp">Exporta el progrés</button><button class="ghostbtn" id="imp">Importa el progrés</button></div>
     <div class="expbox" id="expBox" hidden>
       <p id="expMsg"></p>
       <textarea id="expTxt" readonly spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
-      <div class="btns2"><button class="ghostbtn" id="expCopy">Copia</button><button class="ghostbtn" id="expClose">Tanca</button></div>
+      <div class="btns2"><button class="ghostbtn" id="expCopy">Copia</button><button class="ghostbtn" id="expFile">Desa com a fitxer</button><button class="ghostbtn" id="expClose">Tanca</button></div>
+    </div>
+    <div class="expbox" id="impBox" hidden>
+      <p id="impMsg">Enganxa el text del progrés o tria el fitxer que vas desar.</p>
+      <textarea id="impTxt" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Enganxa aquí el text"></textarea>
+      <div class="btns2"><label class="ghostbtn filebtn">Tria un fitxer<input type="file" id="impFile" accept=".json,.txt,application/json,text/plain" hidden></label><button class="primary" id="impGo" style="padding:12px;font-size:15px">Importa</button><button class="ghostbtn" id="impClose">Tanca</button></div>
     </div>
     <button class="danger" id="reset">Esborra el progrés</button>
   </section>
@@ -305,6 +337,10 @@ h1{margin:0;font-size:20px;font-weight:700;line-height:1.2}
     <div id="wordsHost"></div>
   </section>
 
+  <section id="v-combina" hidden>
+    <div id="combiHost"></div>
+  </section>
+
   <p class="credit">Ordre i forma dels traços: KanjiVG, © Ulrich Apel, llicència CC BY-SA 3.0 (kanjivg.tagaini.net).</p>
 </div>
 
@@ -314,6 +350,7 @@ h1{margin:0;font-size:20px;font-weight:700;line-height:1.2}
     <button class="tab" role="tab" data-v="ex" aria-selected="false"><span class="ti">問</span>Exercicis</button>
     <button class="tab" role="tab" data-v="escriu" aria-selected="false"><span class="ti">書</span>Escriu</button>
     <button class="tab" role="tab" data-v="paraules" aria-selected="false"><span class="ti">語</span>Paraules<span class="lock" id="tabLock">🔒</span></button>
+    <button class="tab" role="tab" data-v="combina" aria-selected="false"><span class="ti">合</span>Combina<span class="lock" id="cbLock">🔒</span></button>
   </div>
 </nav>
 
@@ -865,12 +902,53 @@ function makeJudge(SET, opt){
     if(bad) return hd ? 'El cercle (handakuten) va a dalt a la dreta del kana, molt més amunt del que l\'has posat.' : 'El dakuten va a dalt a la dreta del kana, molt més amunt del que l\'has posat.';
     return null;
   }
+  /* ゆ: el traç 1 fa un bucle i l'extrem torna cap amunt i a l'esquerra; si baixa fins al fons sense recargolar-se, el bucle no existeix */
+  function yuLoopCheck(sts, target){
+    if(target!=='ゆ' || sts.length!==2) return null;
+    var N=normStrokes(sts), a=N[0], b=N[1];
+    function wd(st){ var lo=1e9, hi=-1e9; st.forEach(function(p){ if(p.x<lo)lo=p.x; if(p.x>hi)hi=p.x; }); return hi-lo; }
+    if(wd(b)>wd(a)) { var t=a; a=b; b=t; }
+    if(a[0].x>0.5) return null;
+    var e=a[a.length-1], maxy=-1; a.forEach(function(p){ if(p.y>maxy) maxy=p.y; });
+    if(e.y>0.80 && (maxy-e.y)<0.03) return 'El bucle de ゆ no es tanca: l\'extrem del traç ha de tornar cap amunt i cap a l\'esquerra.';
+    return null;
+  }
+  /* ヤ: el primer traç acaba baixant cap avall a la dreta; sense aquest ganxo és una ratlla recta i es confon amb ナ */
+  function yaHookCheck(sts, target){
+    if(target!=='ヤ' || sts.length!==2) return null;
+    var N=normStrokes(sts), a=N[0], b=N[1];
+    function wd(st){ var lo=1e9, hi=-1e9; st.forEach(function(p){ if(p.x<lo)lo=p.x; if(p.x>hi)hi=p.x; }); return hi-lo; }
+    if(wd(b)>wd(a)) a=b;
+    var im=0; a.forEach(function(p,i){ if(p.x>a[im].x) im=i; });
+    if(a[a.length-1].y-a[im].y<0.10) return 'El primer traç de ヤ ha d\'acabar baixant cap avall a la dreta; sense això és una ratlla recta i es confon amb ナ.';
+    return null;
+  }
+  /* ュ: el traç vertical acaba a la ratlla de baix; si la sobrepassa i baixa per sota, no és ユ */
+  function yuSmallCheck(sts, target){
+    if(target!=='ユ' || sts.length!==2) return null;
+    function my(st){ var t=0; st.forEach(function(p){ t+=p.y; }); return t/st.length; }
+    var a=sts[0], b=sts[1]; if(my(b)<my(a)){ var t=a; a=b; b=t; }
+    var e=a[a.length-1], by=null, bd=1e9;
+    b.forEach(function(p){ var d=Math.abs(p.x-e.x); if(d<bd){ bd=d; by=p.y; } });
+    var ys=[]; sts.forEach(function(s){ s.forEach(function(p){ ys.push(p.y); }); });
+    var h=Math.max.apply(null,ys)-Math.min.apply(null,ys); if(h<=0) return null;
+    if(e.y-by>0.08*h) return 'El traç vertical de ユ ha d\'acabar a la ratlla de baix, no passar-hi per sota.';
+    return null;
+  }
   function judge(sts, target){
     build();
     var n=sts.length, need=counts(target);
+    if(need.indexOf(n)<0){
+      var nf0=target.normalize?target.normalize('NFD'):'';
+      if(nf0.indexOf('\u3099')>=0 && need.indexOf(n+2)>=0) return {ok:false, level:'ko', strokes:n, top:[], why:'Falta el dakuten (゛): són dues ratlletes després del kana.'};
+      if(nf0.indexOf('\u3099')>=0 && need.indexOf(n+1)>=0) return {ok:false, level:'ko', strokes:n, top:[], why:'El dakuten (゛) són dues ratlletes; n\'has fet només una.'};
+      if(nf0.indexOf('\u309a')>=0 && need.indexOf(n+1)>=0) return {ok:false, level:'ko', strokes:n, top:[], why:'Falta el handakuten (゜): és un cercle petit després del kana.'};
+    }
     if(need.indexOf(n)<0) return {ok:false, level:'ko', strokes:n, top:[], why:target+' té '+need.join(' o ')+' traços i n\'has fet '+n+'.'};
     var dk=dakutenCheck(sts, target);
     if(dk) return {ok:false, level:'ko', strokes:n, top:[], why:dk};
+    var yl=yuLoopCheck(sts, target)||yaHookCheck(sts, target)||yuSmallCheck(sts, target);
+    if(yl) return {ok:false, level:'ko', strokes:n, top:[], why:yl};
     var mp=markPos(sts, target);
     if(mp) return {ok:false, level:'ko', strokes:n, top:[], why:mp};
     var sameCount=KEYS.filter(function(k){ return counts(k).indexOf(n)>=0; });
@@ -900,10 +978,17 @@ function makeJudge(SET, opt){
       var d=Math.min(mine.V[s][j], mine.F[s][j]);
       if(d>wd){ wd=d; worst=s; }
     }
+    var nfk=target.normalize?target.normalize('NFD'):'', nmk=(nfk.indexOf('\u3099')>=0?2:0)+(nfk.indexOf('\u309a')>=0?1:0);
+    for(var sl=0; sl<n-nmk; sl++){
+      var jl=p[sl], Lt=plen(R[jl]), Lu=plen(U[sl]);
+      if(Lt>=0.08 && Lt<0.4 && Lu>Lt*3 && Lu>0.25) advice.push('el traç '+(jl+1)+' és massa llarg');
+      else if(Lt>=0.6 && Lu<Lt*0.4) advice.push('el traç '+(jl+1)+' és massa curt');
+    }
     if(worst>=0 && wd>0.20){
       var jw=p[worst];
       var uu=mine.V[worst][jw] < mine.F[worst][jw] ? U[worst].slice().reverse() : U[worst];
       var tip=strokeTip(uu, R[jw]);
+      if(wd>0.22 && tip.indexOf('més s\'allunya')<0) return {ok:false, level:'ko', strokes:n, top:tops, hl:jw, why:'El traç '+(jw+1)+' és massa lluny del seu lloc al model: '+tip+'.'};
       if(tip.indexOf('més s\'allunya')<0 || wd>0.26){ advice.push('revisa el traç '+(jw+1)+': '+tip); hl=jw; }
     }
     /* decisió */
@@ -993,6 +1078,7 @@ function mountWriter(host, item, opts){
     wres.innerHTML='<p class="verdict '+cls+'">'+head+'</p>'+
       (!r.ok ? '<p class="errline">'+r.why+'</p>' : '')+
       (r.ok && r.advice && r.advice.length ? '<div class="advice">Consell: '+r.advice.join('; ')+'.</div>' : '')+
+      (r.ok && r.twin ? '<p class="note" style="margin:0;text-align:center">'+r.twin+'</p>' : '')+
       '<div class="wline"><span>Traços: '+r.strokes+' · en té '+item.st+'</span><button class="linkish" data-a="order">Mostra l\'ordre</button></div>'+
       (cands ? '<div class="cands">Hi veig:'+cands+'</div>' : '')+
       '<div class="orderbox" hidden></div>'+
@@ -1010,6 +1096,7 @@ function mountWriter(host, item, opts){
       b.disabled=true; b.textContent='…';
       fontsReady.then(function(){ setTimeout(function(){
         var r=judge(strokes, item.k);
+        if(TWIN[item.k]){ var r2=judge(strokes, TWIN[item.k]); if(!r.ok && r2.ok) r=r2; if(r.ok) r.twin=item.k+' i '+TWIN[item.k]+' sonen igual: l\'app accepta tots dos.'; }
         locked=true; finalOk=r.ok; snap=snapshot(item.k,'write'); record(item.k,'write',r.ok);
         setGhost(true, true, typeof r.hl==='number' ? r.hl : -1); wbar.hidden=true; showResult(r);
         if(opts.onJudged) opts.onJudged(r.ok);
@@ -1055,6 +1142,7 @@ function renderSub(){
   if(u>=UNLOCK){ ub.innerHTML='<span>語 <b>Paraules desbloquejat</b></span><span class="muted" style="margin-left:auto">'+u+'/46 bàsics</span>'; }
   else ub.innerHTML='<span>🔒 Paraules</span><span class="meter"><i style="width:'+Math.round(u/UNLOCK*100)+'%"></i></span><b>'+u+'/'+UNLOCK+'</b>';
   $('#tabLock').hidden=u>=UNLOCK;
+  $('#cbLock').hidden=comboUnlocked();
   if(!resetBtn.classList.contains('armed')) resetBtn.textContent=resetLabel();
 }
 $('#chart').addEventListener('click', function(e){
@@ -1066,14 +1154,13 @@ $('#quick').addEventListener('click', function(e){
   var c=e.target.closest('[data-q]'); if(!c) return;
   var q=c.getAttribute('data-q'); P().rows = q==='base' ? BASE_IDS.slice() : q==='all' ? ALL_IDS.slice() : []; save(); renderChart();
 });
-/* ================= Exporta el progrés ================= */
+/* ================= Exporta / importa el progrés ================= */
 function exportText(){
   var d=new Date(), pad=function(n){ return (n<10?'0':'')+n; };
   var stamp=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes());
   return JSON.stringify({app:'kana-al-dit', fmt:1, date:stamp, data:S});
 }
-function copyText(t, done){
-  var ta=$('#expTxt');
+function copyText(t, ta, done){
   function fallback(){
     try{ ta.focus(); ta.setSelectionRange(0, t.length); var ok=document.execCommand('copy'); done(!!ok); }catch(e){ done(false); }
   }
@@ -1082,24 +1169,82 @@ function copyText(t, done){
     else fallback();
   }catch(e){ fallback(); }
 }
+function fileStamp(){ var d=new Date(), p2=function(n){ return (n<10?'0':'')+n; }; return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()); }
+function shareFile(text, name, cb){
+  try{
+    var f=new File([text], name, {type:'application/json'});
+    if(navigator.canShare && navigator.canShare({files:[f]}) && navigator.share){
+      navigator.share({files:[f], title:'Progrés de Kana al dit'}).then(function(){ cb('ok'); }, function(e){ cb(e && e.name==='AbortError' ? 'cancel' : 'fail'); });
+      return;
+    }
+  }catch(e){}
+  try{
+    var blob=new Blob([text], {type:'application/json'}), url=URL.createObjectURL(blob), a=document.createElement('a');
+    a.href=url; a.download=name; document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); try{ URL.revokeObjectURL(url); }catch(e){} }, 1500);
+    cb('download');
+  }catch(e2){ cb('fail'); }
+}
 $('#exp').addEventListener('click', function(){
-  var t=exportText(); $('#expTxt').value=t; $('#expBox').hidden=false;
+  var t=exportText(); $('#impBox').hidden=true; $('#expTxt').value=t; $('#expBox').hidden=false;
   $('#expMsg').textContent='Copiant…';
-  copyText(t, function(ok){
-    $('#expMsg').textContent = ok ? 'Progrés copiat. Enganxa\'l a Notes per desar-lo.' : 'No s\'ha pogut copiar sol. Toca el text, selecciona-ho tot i copia.';
+  copyText(t, $('#expTxt'), function(ok){
+    $('#expMsg').textContent = ok ? 'Progrés copiat. Enganxa\'l a Notes, o desa\'l com a fitxer.' : 'No s\'ha pogut copiar sol. Toca el text, selecciona-ho tot i copia, o desa\'l com a fitxer.';
     if(!ok){ try{ $('#expTxt').focus(); $('#expTxt').setSelectionRange(0, t.length); }catch(e){} }
   });
 });
 $('#expCopy').addEventListener('click', function(){
-  var t=$('#expTxt').value; copyText(t, function(ok){ $('#expMsg').textContent = ok ? 'Copiat.' : 'No s\'ha pogut copiar sol. Toca el text, selecciona-ho tot i copia.'; });
+  var t=$('#expTxt').value; copyText(t, $('#expTxt'), function(ok){ $('#expMsg').textContent = ok ? 'Copiat.' : 'No s\'ha pogut copiar sol. Toca el text, selecciona-ho tot i copia.'; });
+});
+$('#expFile').addEventListener('click', function(){
+  var t=$('#expTxt').value;
+  shareFile(t, 'kana-al-dit-progres-'+fileStamp()+'.json', function(r){
+    $('#expMsg').textContent = r==='ok' ? 'Fitxer compartit. Desa\'l a Fitxers.' : r==='cancel' ? 'Cancel·lat.' : r==='download' ? 'Descàrrega iniciada. Si no veus el fitxer, fes servir Copia.' : 'No s\'ha pogut crear el fitxer. Fes servir Copia.';
+  });
 });
 $('#expClose').addEventListener('click', function(){ $('#expBox').hidden=true; $('#expTxt').value=''; });
-
+function parseProgress(txt){
+  var t=String(txt||'').trim(); if(!t) return {err:'No hi ha cap text. Enganxa\'l o tria un fitxer.'};
+  var o; try{ o=JSON.parse(t); }catch(e){ return {err:'No s\'ha pogut llegir. Assegura\'t que el text és sencer, sense retalls.'}; }
+  if(!o || o.app!=='kana-al-dit' || !o.data) return {err:'Això no sembla una exportació de Kana al dit.'};
+  var d=o.data;
+  if(!d.H || !d.K || !d.H.st || !d.K.st || !d.H.rows || !d.K.rows) return {err:'Falten dades d\'hiragana o de katakana.'};
+  return {ok:true, o:o, d:d};
+}
+var impArmed=false;
+function impReset(){ impArmed=false; $('#impGo').textContent='Importa'; }
+$('#imp').addEventListener('click', function(){ $('#expBox').hidden=true; $('#expTxt').value=''; $('#impBox').hidden=false; $('#impMsg').textContent='Enganxa el text del progrés o tria el fitxer que vas desar.'; impReset(); });
+$('#impClose').addEventListener('click', function(){ $('#impBox').hidden=true; $('#impTxt').value=''; impReset(); });
+$('#impTxt').addEventListener('input', impReset);
+$('#impFile').addEventListener('change', function(){
+  var f=this.files && this.files[0]; if(!f) return;
+  var rd=new FileReader();
+  rd.onload=function(){ $('#impTxt').value=String(rd.result||''); impReset(); $('#impMsg').textContent='Fitxer carregat. Toca «Importa».'; };
+  rd.onerror=function(){ $('#impMsg').textContent='No s\'ha pogut llegir el fitxer.'; };
+  rd.readAsText(f); this.value='';
+});
+$('#impGo').addEventListener('click', function(){
+  var r=parseProgress($('#impTxt').value);
+  if(!r.ok){ $('#impMsg').textContent=r.err; impReset(); return; }
+  var d=r.d;
+  if(!impArmed){
+    impArmed=true; this.textContent='Confirma i substitueix';
+    $('#impMsg').textContent='Progrés del '+(r.o.date||'?')+': hiragana, '+Object.keys(d.H.st).length+' kana amb pràctica; katakana, '+Object.keys(d.K.st).length+'. Si confirmes, substitueix el progrés actual (se\'n guarda una còpia de seguretat).';
+    return;
+  }
+  try{ localStorage.setItem(KEY+':backup', JSON.stringify(S)); }catch(e){}
+  for(var key in d){ if(Object.prototype.hasOwnProperty.call(d,key)) S[key]=d[key]; }
+  if(!S.types || S.types.rec===undefined) S.types={rec:true,read:true,listen:true,write:true};
+  if(!S.wtypes) S.wtypes={read:true,romaji:true,kana:true};
+  if(!S.H) S.H=blank(); if(!S.K) S.K=blank();
+  save(); useScript(S.script||'H'); applyFont(); CB.view='home'; CB.Q=null; renderChart();
+  impReset(); $('#impTxt').value=''; $('#impMsg').textContent='Progrés recuperat.';
+});
 var resetBtn=$('#reset'), armTimer=null;
 function resetLabel(){ return 'Esborra el progrés de '+(SCRIPT==='K'?'katakana':'hiragana'); }
 resetBtn.addEventListener('click', function(){
   if(resetBtn.classList.contains('armed')){
-    P().st={}; P().words={}; save(); renderChart(); resetBtn.classList.remove('armed'); resetBtn.textContent='Progrés esborrat';
+    P().st={}; P().words={}; P().cb={}; P().cu=0; P().cwu={}; save(); renderChart(); resetBtn.classList.remove('armed'); resetBtn.textContent='Progrés esborrat';
     clearTimeout(armTimer); armTimer=setTimeout(function(){ resetBtn.textContent=resetLabel(); }, 2000);
   } else {
     resetBtn.classList.add('armed'); resetBtn.textContent='Toca de nou per esborrar tot el '+(SCRIPT==='K'?'katakana':'hiragana');
@@ -1200,7 +1345,7 @@ function renderQ(){
   } else if(q.mode==='read'){
     h+='<p class="qbig kg">'+it.k+'</p><div id="readHost"></div>';
   } else if(q.mode==='write'){
-    h+='<p class="qro">'+it.r+(TWIN[it.k]?' <span class="kg" style="font-size:.7em">('+it.k+')</span>':'')+'</p><p class="qhint">'+(it.hint||'&nbsp;')+'</p><div id="qw"></div>';
+    h+='<p class="qro">'+it.r+'</p><p class="qhint">'+(it.hint||'&nbsp;')+'</p><div id="qw"></div>';
   }
   h+='<div class="after" id="after" hidden></div>';
   host.innerHTML=h;
@@ -1305,7 +1450,7 @@ function renderWrite(){
   forced=null;
   if(!it){ host.innerHTML='<div class="panel"><p class="muted" style="margin:0">No hi ha cap fila triada. Tria-les a la Taula per començar a escriure.</p></div>'; return; }
   lastW=it.k;
-  host.innerHTML='<p class="qro">'+it.r+(TWIN[it.k]?' <span class="kg" style="font-size:.7em">('+it.k+')</span>':'')+'</p><p class="qhint">'+it.st+' traç'+(it.st===1?'':'os')+(it.hint?' · '+it.hint:'')+'</p>'+
+  host.innerHTML='<p class="qro">'+it.r+'</p><p class="qhint">'+it.st+' traç'+(it.st===1?'':'os')+(it.hint?' · '+it.hint:'')+'</p>'+
     '<div class="wtop"><button class="toggle" id="traceT" aria-pressed="'+S.trace+'">Model de fons</button><button class="toggle" id="orderT" aria-pressed="false">Mostra l\'ordre</button>'+(hasTTS?'<button class="toggle" id="sayT">▶ Escolta</button>':'')+'</div>'+
     '<div class="orderbox" id="orderBox" hidden></div><div id="ww" style="margin-top:8px"></div>'+
     '<div style="text-align:center;margin-top:10px"><button class="linkish" id="skipW">Salta\'l</button></div>';
@@ -1360,9 +1505,9 @@ function collapseRo(t){
   return t;
 }
 function romajiWordOK(W, typed){ var t=collapseRo(typed); return !!t && t===collapseRo(wordRomaji(W)); }
-function wordsList(){ return SCRIPT==='K' ? WORDS_K : WORDS_H; }
+function wordsList(){ return (SCRIPT==='K' ? WORDS_K : WORDS_H).concat(WORDS_CB[SCRIPT]); }
 function availableWords(){
-  return wordsList().filter(function(W){ for(var i=0;i<W.w.length;i++){ if(W.w[i]==='ー') continue; if(!mastered(W.w[i],'rec')) return false; } return true; });
+  return wordsList().filter(function(W){ if(W.sec && !cbSecUnlocked(W.sec)) return false; for(var i=0;i<W.w.length;i++){ if(W.w[i]==='ー' || !BY_K[W.w[i]]) continue; if(!mastered(W.w[i],'rec')) return false; } return true; });
 }
 function wordStat(W, ok){ var s=P().words[W.w]||{ok:0,ko:0}; if(ok) s.ok++; else s.ko++; P().words[W.w]=s; save(); }
 var WLABEL={read:'Llegir', romaji:'Escriure en romaji', kana:'Escriure en kana'};
@@ -1429,6 +1574,7 @@ function wordDone(ok, msg){
   if(hasTTS) setTimeout(function(){ speak(W.w,0.85); }, 200);
 }
 function startKanaWord(W){
+  if(W.sec){ startSeqWord(W); return; }
   var chars=W.w.split(''), res=[], idx=0;
   function boxes(){
     $('#kBoxes').innerHTML=chars.map(function(c,i){
@@ -1448,7 +1594,7 @@ function startKanaWord(W){
       return;
     }
     var it=BY_K[chars[idx]];
-    kw.innerHTML='<p class="qhint" style="margin:0 0 6px">Kana '+(idx+1)+' de '+chars.length+' · <b>'+(it.snd===it.r?it.r:(it.r+' ('+it.k+')'))+'</b></p><div id="kwp"></div>';
+    kw.innerHTML='<p class="qhint" style="margin:0 0 6px">Kana '+(idx+1)+' de '+chars.length+' · <b>'+it.r+'</b></p><div id="kwp"></div>';
     mountWriter($('#kwp'), it, {trace:false, onNext:function(ok){ res[idx]=ok; idx++; step(); window.scrollTo(0,0); }});
   }
   step();
@@ -1502,15 +1648,430 @@ $('#wordsHost').addEventListener('click', function(e){
   else if(a==='next' || a==='skip') renderWords();
 });
 
+/* ================= Combina (v2.2) ================= */
+var CB_SMALL={'ゃ':'や','ゅ':'ゆ','ょ':'よ','っ':'つ','ャ':'ヤ','ュ':'ユ','ョ':'ヨ','ッ':'ツ'};
+var CB_VOW={a:'あ',i:'い',u:'う',e:'え',o:'お'};
+var CB_DATA={
+  H:{
+    long:[['ええ','sí'],['おかあさん','mare'],['おにいさん','germà gran'],['おおきい','gran'],['ありがとう','gràcies'],['せんせい','professor'],['こうえん','parc'],['おとうさん','pare']],
+    tsu:[['きって','segell'],['かった','vaig comprar'],['ざっし','revista'],['がっこう','escola'],['にっぽん','Japó'],['きっぷ','bitllet'],['ねっこ','arrel'],['まっすぐ','recte']],
+    yoonW:[['きょう','avui'],['しゅくだい','deures'],['おちゃ','te'],['びょういん','hospital'],['じゅう','deu'],['りょこう','viatge'],['ちょっと','una mica'],['しゃしん','foto']]
+  },
+  K:{
+    long:[['コーヒー','cafè'],['ラーメン','ramen'],['ケーキ','pastís'],['スーパー','supermercat'],['タクシー','taxi'],['ビール','cervesa'],['カレー','curri'],['ノート','llibreta'],['ゲーム','joc'],['スキー','esquí']],
+    tsu:[['ロッカー','taquilla'],['ベッド','llit'],['カップ','tassa'],['サッカー','futbol'],['バッグ','bossa'],['ホットドッグ','frankfurt'],['コップ','got'],['クッキー','galeta']],
+    yoonW:[['シャツ','camisa'],['ジュース','suc'],['チョコ','xocolata'],['シャワー','dutxa'],['ニュース','notícies'],['ヒーロー','heroi'],['チャンス','oportunitat'],['ジャム','melmelada']]
+  }
+};
+var CB_YROWS=['き','し','ち','に','ひ','み','り','ぎ','じ','び','ぴ'];
+var CB_SECS=['long','tsu','yoon'];
+function cbConv(s,sc){ return sc==='K' ? h2k(s) : s; }
+function cbRo(s){
+  var out='', i=0, gem=false;
+  while(i<s.length){
+    var c=s.charAt(i);
+    if(c==='っ'||c==='ッ'){ gem=true; i++; continue; }
+    if(c==='ー'){ var m=out.match(/[aiueo]$/); out+= m ? m[0] : ''; i++; continue; }
+    var it=BY_K[c];
+    if(!it){ out+=c; i++; continue; }
+    var r=it.r, n=s.charAt(i+1), v={'ゃ':'a','ゅ':'u','ょ':'o','ャ':'a','ュ':'u','ョ':'o'}[n];
+    if(v){ var b=r.slice(0,-1); r=b+((b==='sh'||b==='ch'||b==='j')?'':'y')+v; i+=2; } else i++;
+    if(gem){ r=(r.charAt(0)==='c' && r.charAt(1)==='h' ? 't' : r.charAt(0))+r; gem=false; }
+    out+=r;
+  }
+  return out;
+}
+function cbNorm(t){
+  t=String(t||'').toLowerCase().replace(/[āâ]/g,'aa').replace(/[īî]/g,'ii').replace(/[ūû]/g,'uu').replace(/[ēê]/g,'ee').replace(/[ōô]/g,'oo').replace(/[^a-z]/g,'');
+  t=t.replace(/ou/g,'oo').replace(/ei/g,'ee');
+  t=t.replace(/sh(?=[aueo])/g,'sy').replace(/shi/g,'si').replace(/ch(?=[aueo])/g,'ty').replace(/chi/g,'ti').replace(/tsu/g,'tu').replace(/fu/g,'hu').replace(/j(?=[aueo])/g,'zy').replace(/ji/g,'zi').replace(/tch/g,'tt');
+  return t;
+}
+function cbItems(sec, sc){
+  sc=sc||SCRIPT; var out=[];
+  if(sec==='yoon'){
+    CB_YROWS.forEach(function(r){ ['ゃ','ゅ','ょ'].forEach(function(v){ var k=cbConv(r+v,sc); out.push({key:'yoon:'+k, kana:k, ro:cbRo(k), m:'', sec:'yoon'}); }); });
+  } else {
+    CB_DATA[sc][sec].forEach(function(w){ out.push({key:sec+':'+w[0], kana:w[0], ro:cbRo(w[0]), m:w[1], sec:sec}); });
+  }
+  return out;
+}
+/* ----- estat ----- */
+function cbSt(){ var p=P(); if(!p.cb) p.cb={}; return p.cb; }
+function cbSk(key,skill){ var s=cbSt()[key]; return s ? s[skill] : null; }
+function cbMastered(key,skill){ var s=cbSk(key,skill); return !!(s && s.streak>=3); }
+function cbRecord(key,skill,ok){
+  var T=cbSt(); if(!T[key]) T[key]={};
+  var s=T[key][skill] || {ok:0,ko:0,streak:0,t:0};
+  if(ok){ s.ok++; s.streak++; } else { s.ko++; s.streak=0; }
+  s.t=Date.now(); T[key][skill]=s; save();
+}
+function cbItemOk(it){ return cbMastered(it.key,'rec') && cbMastered(it.key,'write'); }
+function cbSecDone(sec){ return cbItems(sec).filter(cbItemOk).length; }
+function cbSecNeed(sec){ return Math.ceil(cbItems(sec).length*0.8); }
+function cbSecUnlocked(sec){
+  var p=P(); if(!p.cwu) p.cwu={};
+  if(p.cwu[sec]) return true;
+  if(cbSecDone(sec)>=cbSecNeed(sec)){ p.cwu[sec]=1; save(); return true; }
+  return false;
+}
+function comboUnlocked(){
+  var p=P(); if(p.cu) return true;
+  if(ALL.every(function(it){ return lvl(it.k)==='ok'; })){ p.cu=1; save(); return true; }
+  return false;
+}
+function cbWordList(sc){
+  var out=[];
+  ['long','tsu'].forEach(function(sec){ CB_DATA[sc][sec].forEach(function(w){ out.push({w:w[0], m:w[1], sec:sec}); }); });
+  CB_DATA[sc].yoonW.forEach(function(w){ out.push({w:w[0], m:w[1], sec:'yoon'}); });
+  return out;
+}
+/* ----- nom i regles ----- */
+function cbName(sec){
+  var K=SCRIPT==='K';
+  return sec==='long' ? (K?'Vocals llargues (ー)':'Vocals llargues') : sec==='tsu' ? (K?'ッ petit':'っ petit') : 'Combinades (ゃ ゅ ょ)';
+}
+function cbDesc(sec){
+  var K=SCRIPT==='K';
+  return sec==='long' ? (K?'La ratlla ー allarga la vocal':'La vocal es repeteix: おお, いい, おう…') : sec==='tsu' ? 'Pausa breu i consonant doble' : 'き + ゃ = kya, una sola síl·laba';
+}
+function cbRule(sec){
+  var K=SCRIPT==='K', c=function(s){ return cbConv(s,SCRIPT); };
+  if(sec==='long'){
+    return K
+      ? '<p>En katakana la vocal llarga s\'escriu amb <b class="kg">ー</b>, una ratlla horitzontal darrere del kana. No es repeteix cap vocal. La vocal dura el doble.</p>'+
+        '<p>Es dibuixa d\'esquerra a dreta, recta. En vertical seria una altra cosa.</p><div class="ex"><span><b class="kg">ビル</b> bìru · edifici</span><span><b class="kg">ビール</b> biiru · cervesa</span></div>'
+      : '<p>En hiragana la vocal llarga s\'escriu <b>repetint la vocal</b>: ああ, いい, うう, ええ, おお. La vocal dura el doble.</p>'+
+        '<p>Amb la <b>e</b> i la <b>o</b> també s\'usa い i う: <span class="kg">せんせい</span> sensei, <span class="kg">ありがとう</span> arigatou.</p>'+
+        '<div class="ex"><span><b class="kg">おばさん</b> obasan · tia</span><span><b class="kg">おばあさん</b> obaasan · àvia</span></div>';
+  }
+  if(sec==='tsu'){
+    return '<p>El <b class="kg">'+c('っ')+'</b> petit va davant d\'una consonant: fa una <b>pausa breu</b> i la consonant següent es <b>dobla</b>: <span class="kg">'+c('きって')+'</span> kitte.</p>'+
+      '<p>Es dibuixa com un <span class="kg">'+c('つ')+'</span> més petit, a la part baixa de la línia. No és una síl·laba pròpia.</p>'+
+      (K ? '<div class="ex"><span><b class="kg">ベッド</b> beddo · llit</span><span><b class="kg">サッカー</b> sakkaa · futbol</span></div>'
+        : '<div class="ex"><span><b class="kg">かた</b> kata · espatlla</span><span><b class="kg">かった</b> katta · vaig comprar</span></div>');
+  }
+  return '<p>Un kana de la columna <b>i</b> ('+c('き し ち に ひ み り ぎ じ び ぴ')+') seguit d\'un <b class="kg">'+c('ゃ ゅ ょ')+'</b> petit es llegeix com <b>una sola síl·laba</b>: <span class="kg">'+c('きゃ')+'</span> kya.</p>'+
+    '<p>Amb kana grans són dues síl·labes: <span class="kg">'+c('きや')+'</span> kiya. Els petits s\'escriuen més petits i a la part baixa, a la dreta.</p>'+
+    '<p>Pronunciació: '+c('しゃ')+' sha · '+c('ちゃ')+' cha · '+c('じゃ')+' ja.</p>';
+}
+/* ----- distractors ----- */
+function cbMut(it){
+  var s=it.kana, K=SCRIPT==='K', a=s.split(''), out=[], i, j;
+  function push(x){ if(x && x!==s && out.indexOf(x)<0) out.push(x); }
+  var tsu=K?'ッ':'っ', bar='ー';
+  if(it.sec==='long'){
+    for(i=0;i<a.length;i++){
+      var isLen = a[i]===bar || (i>0 && !K && ((a[i]===a[i-1] && CB_RO_V(a[i])) || (a[i]==='い' && 'えけせてねへめれげぜでべぺ'.indexOf(a[i-1])>=0) || (a[i]==='う' && 'おこそとのほもよろごぞどぼぽょゅ'.indexOf(a[i-1])>=0)));
+      if(isLen){ push(a.slice(0,i).concat(a.slice(i+1)).join('')); }
+    }
+    for(i=0;i<a.length-1 || i===0;i++){
+      if(a[i]===bar || !BY_K[a[i]]) continue;
+      var ins = K ? bar : CB_VOW[BY_K[a[i]].r.slice(-1)];
+      if(ins && !(a[i+1]===ins)) push(a.slice(0,i+1).concat([ins]).concat(a.slice(i+1)).join(''));
+    }
+    if(!K){ for(i=1;i<a.length;i++){ if(a[i]==='い') push(a.slice(0,i).concat(['え']).concat(a.slice(i+1)).join('')); if(a[i]==='う') push(a.slice(0,i).concat(['お']).concat(a.slice(i+1)).join('')); if(a[i]==='お'&&a[i-1]==='お') push(a.slice(0,i).concat(['う']).concat(a.slice(i+1)).join('')); if(a[i]==='え'&&a[i-1]==='え') push(a.slice(0,i).concat(['い']).concat(a.slice(i+1)).join('')); } }
+  } else if(it.sec==='tsu'){
+    for(i=0;i<a.length;i++){ if(a[i]===tsu){ push(a.slice(0,i).concat(a.slice(i+1)).join('')); } }
+    for(i=1;i<a.length;i++){ if(a[i]!==tsu && a[i-1]!==tsu && BY_K[a[i]] && a[i]!=='ん' && 'あいうえおアイウエオ'.indexOf(a[i])<0) push(a.slice(0,i).concat([tsu]).concat(a.slice(i)).join('')); }
+    for(i=0;i<a.length;i++){ if(a[i]===tsu){ for(j=1;j<a.length;j++){ if(j!==i && j!==i+1){ var b=a.slice(0,i).concat(a.slice(i+1)); b.splice(j>i?j-1:j,0,tsu); push(b.join('')); } } } }
+  } else {
+    var sm=['ゃ','ゅ','ょ','ャ','ュ','ョ'], big={'ゃ':'や','ゅ':'ゆ','ょ':'よ','ャ':'ヤ','ュ':'ユ','ョ':'ヨ'};
+    var base=a[0], sv=a[1], others=sm.filter(function(x){ return K ? x>'ァ' && x!==sv : x<'ァ' && x!==sv; });
+    push(base+big[sv]); push(base);
+    others.forEach(function(x){ push(base+x); });
+    CB_YROWS.forEach(function(r){ var rr=cbConv(r,SCRIPT); if(rr!==base) push(rr+sv); });
+  }
+  return out;
+}
+function CB_RO_V(ch){ return 'あいうえおアイウエオ'.indexOf(ch)>=0; }
+function cbOptions(it, mode){
+  var correct = mode==='k2r' ? it.ro : it.kana, ro0=it.ro, seen={}, opts=[];
+  seen[ro0]=1;
+  var cands=shuffle(cbMut(it)).filter(function(x){ var r=cbRo(x); if(seen[r]) return false; seen[r]=1; return true; });
+  if(cands.length<3){
+    shuffle(cbItems(it.sec)).forEach(function(o){ if(cands.length>=3 || o.kana===it.kana) return; var r=cbRo(o.kana); if(seen[r]) return; seen[r]=1; cands.push(o.kana); });
+  }
+  cands=cands.slice(0,3);
+  var list=[{v:correct, ok:true}].concat(cands.map(function(x){ return {v: mode==='k2r' ? cbRo(x) : x, ok:false}; }));
+  return shuffle(list);
+}
+/* ----- ー: una sola ratlla, recta i gairebé horitzontal ----- */
+function cbBar(sts){
+  var n=sts.length;
+  if(n!==1) return {ok:false, level:'ko', strokes:n, top:[], why:'ー és una sola ratlla i n\'has fet '+n+'.'};
+  var st=sts[0], a=st[0], b=st[st.length-1], len=0, i;
+  for(i=1;i<st.length;i++) len+=Math.sqrt(Math.pow(st[i].x-st[i-1].x,2)+Math.pow(st[i].y-st[i-1].y,2));
+  var dx=b.x-a.x, dy=b.y-a.y, chord=Math.sqrt(dx*dx+dy*dy)||1e-6;
+  var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9; st.forEach(function(p){ if(p.x<x0)x0=p.x; if(p.x>x1)x1=p.x; if(p.y<y0)y0=p.y; if(p.y>y1)y1=p.y; });
+  var w=x1-x0, h=y1-y0, ang=Math.abs(Math.atan2(dy,dx))*180/Math.PI, advice=[];
+  if(chord<0.3) return {ok:false, level:'ko', strokes:n, top:[], why:'La ratlla és massa curta per ser ー.'};
+  if(len/chord>1.25) return {ok:false, level:'ko', strokes:n, top:[], why:'La ratlla és massa corba per ser ー.'};
+  if(ang>35 && ang<145) return {ok:false, level:'ko', strokes:n, top:[], why:'ー ha de ser horitzontal.'};
+  if(ang>=145 || (dx<0 && ang>90)) advice.push('es fa d\'esquerra a dreta');
+  if(ang>15 && ((ang<90 && ang>15) || (ang>145 && ang<165))) advice.push('mantén-la més horitzontal');
+  if(h>w*0.35 && advice.length===0) advice.push('mantén-la més recta');
+  return {ok:true, level:advice.length?'mid':'ok', strokes:n, top:[], advice:advice, why:'Correcte'};
+}
+function cbJudge(sts, c){
+  if(c==='ー') return cbBar(sts);
+  var b=CB_SMALL[c]||c;
+  return (isKata(b)?JK:JH).judge(sts,b);
+}
+/* ----- escriptura per requadres: un kana per requadre ----- */
+function mountSeq(host, item, opts){
+  var hard=opts.hard, cells=item.kana.split(''), pos=0, res=[], strokes=[], cur=null, pending=false, finished=false, ghost=null, showModel=true;
+  host.innerHTML='<div class="kboxes" data-s="boxes"></div><p class="qhint" data-s="hint" style="min-height:2.6em"></p>'+
+    '<div class="pad"><span class="gl gv"></span><span class="gl gh"></span><canvas aria-label="Zona per escriure amb el dit"></canvas></div>'+
+    '<div class="wbar"><button class="ghostbtn" data-s="undo">Desfés</button><button class="ghostbtn" data-s="clear">Esborra</button><button class="primary" data-s="eval">Avalua</button></div>'+
+    '<div class="seqnav" data-s="nav" hidden><button class="ghostbtn" data-s="prev">‹ Anterior</button><button class="ghostbtn" data-s="skip">Següent › (sense avaluar)</button></div>'+
+    '<div class="wres" data-s="res" hidden></div>';
+  function q(n){ return host.querySelector('[data-s="'+n+'"]'); }
+  var pad=host.querySelector('.pad'), cv=host.querySelector('canvas'), ctx=cv.getContext('2d'), size=300;
+  function ink(){ return getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#18202B'; }
+  function setup(){
+    var r=pad.getBoundingClientRect(); size=r.width||300; var dpr=window.devicePixelRatio||1;
+    cv.width=Math.round(size*dpr); cv.height=Math.round(size*dpr); ctx.setTransform(dpr,0,0,dpr,0,0); redraw();
+  }
+  function redraw(){
+    ctx.clearRect(0,0,size,size); ctx.strokeStyle=ink(); ctx.fillStyle=ink(); ctx.lineWidth=size*0.042; ctx.lineCap='round'; ctx.lineJoin='round';
+    strokes.forEach(function(st){
+      if(st.length===1){ ctx.beginPath(); ctx.arc(st[0].x*size, st[0].y*size, ctx.lineWidth/2, 0, Math.PI*2); ctx.fill(); return; }
+      ctx.beginPath(); ctx.moveTo(st[0].x*size, st[0].y*size);
+      for(var i=1;i<st.length-1;i++) ctx.quadraticCurveTo(st[i].x*size, st[i].y*size, (st[i].x+st[i+1].x)/2*size, (st[i].y+st[i+1].y)/2*size);
+      var l=st[st.length-1]; ctx.lineTo(l.x*size, l.y*size); ctx.stroke();
+    });
+  }
+  function pt(e){ var r=cv.getBoundingClientRect(); return {x:(e.clientX-r.left)/r.width, y:(e.clientY-r.top)/r.height}; }
+  cv.addEventListener('pointerdown', function(e){ if(finished) return; e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(err){} if(!pending) q('res').hidden=true; cur=[pt(e)]; strokes.push(cur); redraw(); });
+  cv.addEventListener('pointermove', function(e){
+    if(!cur) return; e.preventDefault();
+    var evs=(e.getCoalescedEvents && e.getCoalescedEvents()) || []; if(!evs.length) evs=[e];
+    for(var i=0;i<evs.length;i++){ var p=pt(evs[i]), l=cur[cur.length-1]; if(Math.abs(p.x-l.x)+Math.abs(p.y-l.y)>0.004) cur.push(p); }
+    redraw();
+  });
+  function end(){ cur=null; }
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+  cv.addEventListener('touchmove', function(e){ e.preventDefault(); }, {passive:false});
+  function clearPad(){ strokes=[]; redraw(); q('res').hidden=true; }
+  function setGhost(){
+    if(ghost){ ghost.remove(); ghost=null; }
+    var c=cells[pos]; if(hard || !c || finished) return;
+    ghost=el('svg',{viewBox:'0 0 109 109','class':'ghost'});
+    var g=el('g',{fill:'none',stroke:'var(--ghost)','stroke-width':'6','stroke-linecap':'round','stroke-linejoin':'round'});
+    var small=CB_SMALL[c];
+    if(small) g.setAttribute('transform','translate(56 56) scale(.5)');
+    var ds = c==='ー' ? ['M12,55 L97,55'] : KVG[small||c];
+    ds.forEach(function(d){ g.appendChild(el('path',{d:d})); });
+    ghost.appendChild(g); pad.insertBefore(ghost, cv);
+  }
+  function boxes(){
+    var h='', n= hard ? pos+1 : cells.length;
+    for(var j=0;j<n;j++){
+      var r=res[j], cl=r ? r.lv : '';
+      if(j===pos && !finished) cl+=' cur';
+      var txt = r ? (hard ? (r.lv==='ko' ? '✗' : '<span class="kg">'+r.k+'</span>') : '<span class="kg">'+cells[j]+'</span>') : (hard ? (j+1) : '<span class="kg">'+cells[j]+'</span>');
+      var tag = (!hard && CB_SMALL[cells[j]]) ? '<small>petit</small>' : '';
+      h+='<span class="'+cl+'" data-i="'+j+'">'+txt+tag+'</span>';
+    }
+    q('boxes').innerHTML=h;
+    q('nav').hidden=hard || finished;
+    var hint=q('hint');
+    if(finished){ hint.innerHTML=''; return; }
+    if(hard) hint.innerHTML='Escriu <b>el kana que et sembli</b> en aquest requadre. Quan hagis acabat, toca «Acabat».';
+    else { var c=cells[pos]; hint.innerHTML='Requadre <b>'+(pos+1)+' de '+cells.length+'</b>: <b class="kg">'+c+'</b>'+(CB_SMALL[c] ? ' · dibuixa-la com <b class="kg">'+CB_SMALL[c]+'</b>, petita' : '')+(c==='ー' ? ' · una sola ratlla, d\'esquerra a dreta' : ''); }
+    setGhost();
+  }
+  function goTo(i){ var n=hard?pos+1:cells.length; if(i<0||i>=n||pending||finished) return; pos=i; clearPad(); boxes(); }
+  function summary(){
+    finished=true; pending=false; if(ghost){ ghost.remove(); ghost=null; }
+    var okn=0, len=cells.length; for(var k=0;k<len;k++) if(res[k] && res[k].lv!=='ko') okn++;
+    var written=hard ? pos+1 : len;
+    var allOk = okn===len && written===len;
+    boxes(); clearPad();
+    var wr=host.querySelector('.wbar'); wr.hidden=true; pad.hidden=true;
+    q('boxes').innerHTML=cells.map(function(c,i){ var r=res[i]; return '<span class="'+(r?r.lv:'')+'"><span class="kg">'+c+'</span></span>'; }).join('');
+    var txt= okn+' de '+len+' correctes'+(hard && written<len ? ' · en falten '+(len-written) : '')+(hard && written>len ? ' · '+(written-len)+' de més' : '');
+    var rr=q('res'); rr.hidden=false;
+    rr.innerHTML='<p class="verdict '+(allOk?'ok':'ko')+'">'+(allOk?'✓ Correcte':'✗ Per repassar')+'</p><p class="note" style="text-align:center;margin:0">'+item.kana.split('').join(' ')+' · '+txt+'</p><div data-s="after"></div>';
+    opts.onDone(allOk, q('after'));
+  }
+  host.addEventListener('click', function(e){
+    var cell=e.target.closest('[data-i]'); if(cell && host.contains(cell) && !hard){ goTo(parseInt(cell.getAttribute('data-i'),10)); return; }
+    var b=e.target.closest('[data-s]'); if(!b || !host.contains(b)) return;
+    var a=b.getAttribute('data-s');
+    if(a==='undo' && !pending && !finished){ strokes.pop(); redraw(); }
+    else if(a==='clear' && !pending && !finished){ clearPad(); }
+    else if(a==='prev'){ goTo(pos-1); }
+    else if(a==='skip'){ if(pos>=cells.length-1) summary(); else goTo(pos+1); }
+    else if(a==='eval' && !pending && !finished){
+      if(!strokes.length){ var rr0=q('res'); rr0.innerHTML='<p class="errline" style="margin:0">Escriu el kana abans d\'avaluar.</p>'; rr0.hidden=false; return; }
+      var c=cells[pos]; b.disabled=true; b.textContent='Avaluant…';
+      fontsReady.then(function(){ setTimeout(function(){
+        var r = c ? cbJudge(strokes, c) : {ok:false, level:'ko', strokes:strokes.length, top:[], why:'Aquesta paraula no té tants kana.'};
+        var head = r.level==='ok' ? '✓ Correcte' : r.level==='mid' ? '≈ Correcte, amb consell' : '✗ Incorrecte';
+        var last = !hard && pos===cells.length-1;
+        var rr=q('res');
+        rr.innerHTML='<p class="verdict '+r.level+'">'+head+'</p>'+
+          (r.ok ? '' : '<p class="errline" style="margin:0">'+(hard ? 'No coincideix amb el kana d\'aquest requadre.' : r.why)+'</p>')+
+          (r.ok && r.advice && r.advice.length ? '<div class="advice">Consell: '+(hard ? r.advice.filter(function(x){ return x.indexOf('s\'assembla')<0; }) : r.advice).join('; ')+'.</div>' : '')+
+          '<div class="nx"><button class="ghostbtn" data-s="retry">Repeteix</button>'+(hard ? '<button class="ghostbtn" data-s="more">＋ Kana següent</button><button class="primary" data-s="fin">Acabat</button>' : '<button class="primary" data-s="'+(last?'fin':'more')+'">'+(last?'Acaba':'Següent ▸')+'</button>')+'</div>';
+        rr.hidden=false; pending=true; res[pos]={lv:r.level, k:c};
+        boxes();
+        b.disabled=false; b.textContent='Avalua';
+      }, 30); });
+    }
+    else if(a==='retry' && pending){ delete res[pos]; pending=false; clearPad(); boxes(); }
+    else if(a==='more' && pending){ pending=false; pos++; clearPad(); boxes(); }
+    else if(a==='fin' && pending){ summary(); }
+  });
+  window.addEventListener('resize', function r(){ if(!host.isConnected){ window.removeEventListener('resize', r); return; } setup(); });
+  setup(); boxes();
+}
+/* ----- pestanya Combina ----- */
+var CB={view:'home', sec:null, hard:true, Q:null};
+function cbHome(){
+  var host=$('#combiHost');
+  if(!comboUnlocked()){
+    var dom=ALL.filter(function(it){ return lvl(it.k)==='ok'; }).length;
+    host.innerHTML='<div class="panel"><p class="eyebrow">🔒 Combina</p><p style="margin:0 0 4px"><b>Vocals llargues, っ petit i kana combinats.</b></p>'+
+      '<p class="muted" style="margin:0;font-size:14px">Es desbloqueja quan dominis els 71 '+(SCRIPT==='K'?'katakana':'hiragana')+' a Reconèixer i a Escriure.</p>'+
+      '<div class="bigmeter"><i style="width:'+Math.round(dom/71*100)+'%"></i></div><p style="margin:0;font-variant-numeric:tabular-nums"><b>'+dom+'</b> de 71</p>'+
+      '<div class="lockgrid">'+ALL.map(function(it){ return '<span class="'+(lvl(it.k)==='ok'?'done':'')+'" title="'+it.r+'">'+it.k+'</span>'; }).join('')+'</div></div>';
+    return;
+  }
+  var h='<p class="eyebrow">Tria una secció</p><div class="cbcards">';
+  CB_SECS.forEach(function(sec){
+    var n=cbItems(sec).length, d=cbSecDone(sec), un=cbSecUnlocked(sec);
+    h+='<button class="cbcard" data-sec="'+sec+'"><b>'+cbName(sec)+'</b><span class="sub2">'+cbDesc(sec)+'</span>'+
+      '<div class="bigmeter" style="margin:0 0 4px"><i style="width:'+Math.round(d/n*100)+'%"></i></div>'+
+      '<span class="sub2" style="margin:0">'+d+' de '+n+' dominats'+(un ? ' · paraules desbloquejades' : ' · paraules a Paraules quan en dominis '+cbSecNeed(sec)) +'</span></button>';
+  });
+  host.innerHTML=h+'</div>';
+}
+function cbSection(){
+  var sec=CB.sec, host=$('#combiHost'), items=cbItems(sec);
+  var h='<div class="cbhead"><button class="linkish" data-cb="back">‹ Combina</button></div><p class="eyebrow" style="margin-top:0">'+cbName(sec)+'</p>'+
+    '<div class="panel rule">'+cbRule(sec)+'</div>'+
+    '<div class="stack" style="margin-top:14px"><button class="primary" data-cb="rec">Reconèixer</button><button class="primary" data-cb="write">Escriure</button></div>'+
+    '<div class="quick" style="margin:12px 0 0"><button class="chip" data-cb="hard" aria-pressed="'+(CB.hard?'true':'false')+'">Difícil: només romaji</button></div>'+
+    '<p class="note" style="margin:6px 0 0">'+(CB.hard ? 'A Escriure només veus el romaji i no saps quants requadres cal omplir. Això compta per al progrés.' : 'Mode guiat: veus els kana i un model. No compta per al progrés.')+'</p>'+
+    '<p class="eyebrow">Progrés</p><div class="items">'+items.map(function(it){ var ok=cbItemOk(it), ln=cbSk(it.key,'rec')||cbSk(it.key,'write'); return '<span class="kg '+(ok?'done':(ln?'learn':''))+'">'+it.kana+'</span>'; }).join('')+'</div>'+
+    '<p class="note">Un element queda dominat quan l\'encertes 3 cops seguits a Reconèixer i 3 cops seguits a Escriure (en mode difícil). Quan en tens '+cbSecNeed(sec)+' de '+items.length+', les paraules d\'aquesta secció surten a Paraules.</p>';
+  host.innerHTML=h;
+}
+function cbStartQuiz(){
+  var sec=CB.sec, items=cbItems(sec), list=[], last=null;
+  for(var i=0;i<10;i++){
+    var cand=items.filter(function(x){ return x.key!==last; }); if(!cand.length) cand=items;
+    var tot=0, ws=cand.map(function(x){ var s=cbSk(x.key,'rec'); var w=s ? Math.max(0.25, Math.min(6, 1+s.ko*1.4-s.ok*0.35-s.streak*0.4)) : 3; tot+=w; return w; }), x0=Math.random()*tot, it=cand[cand.length-1];
+    for(var j=0;j<cand.length;j++){ x0-=ws[j]; if(x0<=0){ it=cand[j]; break; } }
+    last=it.key;
+    var mode = cbMastered(it.key,'rec') ? 'type' : (Math.random()<0.5 ? 'k2r' : 'r2k');
+    list.push({it:it, mode:mode});
+  }
+  CB.Q={list:list, i:0, res:[]}; cbQuiz();
+}
+function cbQuiz(){
+  var Q=CB.Q, q=Q.list[Q.i], it=q.it, host=$('#combiHost'), h='';
+  h+='<div class="qtop"><div class="dots">'+Q.list.map(function(_,i){ var c=i<Q.res.length ? (Q.res[i]?'ok':'ko') : (i===Q.i?'cur':''); return '<i class="'+c+'"></i>'; }).join('')+'</div><button class="quit" data-cb="sec">Surt</button></div>';
+  if(q.mode==='k2r'){
+    q.opts=cbOptions(it,'k2r');
+    h+='<p class="qlabel">Com es llegeix?</p><p class="qbig kg" style="font-size:'+(it.kana.length>3?'56px':'96px')+'">'+it.kana+'</p><div class="opts">'+q.opts.map(function(o,i){ return '<button class="opt r" data-oi="'+i+'">'+o.v+'</button>'; }).join('')+'</div>';
+  } else if(q.mode==='r2k'){
+    q.opts=cbOptions(it,'r2k');
+    h+='<p class="qlabel">Quin és?</p><p class="qro">'+it.ro+'</p><p class="qhint">'+(it.m||'&nbsp;')+'</p><div class="opts">'+q.opts.map(function(o,i){ return '<button class="opt k'+(o.v.length>2?' kw':'')+'" data-oi="'+i+'">'+o.v+'</button>'; }).join('')+'</div>';
+  } else {
+    h+='<p class="qlabel">Escriu el romaji</p><p class="qbig kg" style="font-size:'+(it.kana.length>3?'56px':'96px')+'">'+it.kana+'</p><p class="qhint">Ja el domines: sense opcions. Vocal llarga: dobla-la (ookii) o fes servir ā ī ū ē ō.</p>'+
+      '<form class="typein" id="cbForm"><input id="cbIn" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="latin" aria-label="Romaji"><button class="primary" type="submit">Comprova</button></form><p class="errline" id="cbErr" hidden></p>';
+  }
+  h+='<div class="after" id="cbAfter" hidden></div>';
+  host.innerHTML=h; window.scrollTo(0,0);
+  if(q.mode==='type'){
+    var inp=$('#cbIn'); setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 50);
+    inp.addEventListener('input', function(){ $('#cbErr').hidden=true; });
+    $('#cbForm').addEventListener('submit', function(e){
+      e.preventDefault(); if(inp.disabled) return;
+      if(!inp.value.trim()){ $('#cbErr').textContent='Escriu el romaji abans de comprovar.'; $('#cbErr').hidden=false; return; }
+      var ok=cbNorm(inp.value)===cbNorm(it.ro); inp.disabled=true; inp.classList.add(ok?'right':'wrong'); cbAnswer(ok);
+    });
+  }
+}
+function cbAnswer(ok){
+  var Q=CB.Q, q=Q.list[Q.i], it=q.it;
+  cbRecord(it.key,'rec',ok); Q.res.push(ok);
+  var af=$('#cbAfter');
+  af.innerHTML='<p class="verdict '+(ok?'ok':'ko')+'">'+(ok?'Correcte':'És '+it.kana+' · '+it.ro)+'</p>'+(it.m?'<p class="meaning">'+it.m+'</p>':'')+'<button class="primary" data-cb="next">Següent</button>';
+  af.hidden=false;
+  if(hasTTS) speak(it.kana);
+}
+function cbEndQuiz(){
+  var Q=CB.Q, ok=Q.res.filter(Boolean).length;
+  $('#combiHost').innerHTML='<div class="panel"><p class="qlabel">Ronda acabada</p><p class="score">'+ok+'/'+Q.list.length+'</p><div class="stack"><button class="primary" data-cb="rec">Una altra ronda</button><button class="linkish" data-cb="sec">Torna a la secció</button></div></div>';
+  CB.Q=null; renderSub(); window.scrollTo(0,0);
+}
+function cbStartWrite(){
+  var sec=CB.sec, items=cbItems(sec), last=CB.lastW;
+  var cand=items.filter(function(x){ return x.key!==last; }); if(!cand.length) cand=items;
+  var tot=0, ws=cand.map(function(x){ var s=cbSk(x.key,'write'); var w=s ? Math.max(0.25, Math.min(6, 1+s.ko*1.4-s.ok*0.35-s.streak*0.4)) : 3; tot+=w; return w; }), x0=Math.random()*tot, it=cand[cand.length-1];
+  for(var j=0;j<cand.length;j++){ x0-=ws[j]; if(x0<=0){ it=cand[j]; break; } }
+  CB.lastW=it.key;
+  var host=$('#combiHost');
+  host.innerHTML='<div class="qtop"><span class="qlabel" style="margin:0">'+(CB.hard?'Escriure · difícil':'Escriure · guiat')+'</span><button class="quit" data-cb="sec">Surt</button></div>'+
+    (CB.hard ? '<p class="qro">'+it.ro+'</p><p class="meaning">'+(it.m||'&nbsp;')+'</p>' : '<p class="qro">'+it.ro+'</p><p class="meaning">'+(it.m||'&nbsp;')+'</p>')+
+    '<div id="cbW" style="margin-top:10px"></div>';
+  window.scrollTo(0,0);
+  mountSeq($('#cbW'), it, {hard:CB.hard, onDone:function(ok, slot){
+    if(CB.hard){ cbRecord(it.key,'write',ok); renderSub(); }
+    slot.innerHTML=(CB.hard ? '' : '<p class="note" style="text-align:center;margin:8px 0 0">Mode guiat: no compta per al progrés.</p>')+'<div class="after"><button class="primary" data-cb="again">Un altre exercici</button></div>';
+  }});
+}
+window.__cbTest={items:cbItems, opts:cbOptions, ro:cbRo, norm:cbNorm};
+function renderCombi(){
+  if(CB.view==='sec') cbSection(); else cbHome();
+}
+$('#combiHost').addEventListener('click', function(e){
+  var s=e.target.closest('[data-sec]'); if(s){ CB.sec=s.getAttribute('data-sec'); CB.view='sec'; cbSection(); window.scrollTo(0,0); return; }
+  var b=e.target.closest('[data-cb]'); if(!b) return;
+  var a=b.getAttribute('data-cb');
+  if(a==='back'){ CB.view='home'; CB.Q=null; cbHome(); }
+  else if(a==='sec'){ CB.view='sec'; CB.Q=null; cbSection(); window.scrollTo(0,0); }
+  else if(a==='hard'){ CB.hard=!CB.hard; cbSection(); }
+  else if(a==='rec'){ cbStartQuiz(); }
+  else if(a==='write' || a==='again'){ cbStartWrite(); }
+  else if(a==='next'){ CB.Q.i++; if(CB.Q.i<CB.Q.list.length) cbQuiz(); else cbEndQuiz(); }
+});
+$('#combiHost').addEventListener('click', function(e){
+  var o=e.target.closest('[data-oi]'); if(!o || o.disabled || !CB.Q) return;
+  var q=CB.Q.list[CB.Q.i], i=parseInt(o.getAttribute('data-oi'),10), ok=!!q.opts[i].ok;
+  $$('#combiHost .opt').forEach(function(bt){ bt.disabled=true; var j=parseInt(bt.getAttribute('data-oi'),10); if(q.opts[j].ok) bt.classList.add('right'); else if(j===i) bt.classList.add('wrong'); });
+  cbAnswer(ok);
+});
+
+var WORDS_CB={H:[],K:[]};
+['H','K'].forEach(function(sc){
+  var base=(sc==='K'?WORDS_K:WORDS_H), have={};
+  base.forEach(function(W){ have[W.w]=1; });
+  cbWordList(sc).forEach(function(x){ if(have[x.w]) return; have[x.w]=1; WORDS_CB[sc].push({w:x.w, forms:[x.w], m:x.m, ro:cbRo(x.w), sc:sc, sec:x.sec}); });
+});
+function startSeqWord(W){
+  $('#kBoxes').hidden=true;
+  mountSeq($('#kw'), {kana:W.w, ro:wordRomaji(W), m:W.m}, {hard:true, onDone:function(ok, slot){
+    wordStat(W, ok); slot.innerHTML='';
+    wordDone(ok, ok ? 'Correcte' : 'Hi ha algun kana per repassar · '+W.w);
+  }});
+}
+
 /* ================= Navegació ================= */
 function show(v){
   if(v!=='paraules') stopWordRec();
-  ['taula','ex','escriu','paraules'].forEach(function(x){ $('#v-'+x).hidden = x!==v; });
+  ['taula','ex','escriu','paraules','combina'].forEach(function(x){ $('#v-'+x).hidden = x!==v; });
   $$('.tab').forEach(function(t){ t.setAttribute('aria-selected', t.getAttribute('data-v')===v?'true':'false'); });
   if(v==='taula') renderChart();
   if(v==='ex' && !Q) renderSetup();
   if(v==='escriu') renderWrite();
   if(v==='paraules') renderWords();
+  if(v==='combina') renderCombi();
   window.scrollTo(0,0);
 }
 document.querySelector('.tabs').addEventListener('click', function(e){ var t=e.target.closest('[data-v]'); if(t) show(t.getAttribute('data-v')); });
