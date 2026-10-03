@@ -95,6 +95,13 @@ h1{margin:0;font-size:20px;font-weight:700;line-height:1.2}
 .lv-ok{background:var(--ok)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:14px;font-size:12px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
+.expbtn{margin-top:22px;display:block}
+.expbox{margin-top:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.expbox p{margin:0 0 8px;font-size:13px;color:var(--muted);line-height:1.45}
+.expbox textarea{width:100%;box-sizing:border-box;height:96px;border:1px solid var(--line);background:var(--sunk);border-radius:8px;padding:8px;font-family:var(--mono);font-size:11px;color:var(--ink);resize:none}
+.expbox .btns2{display:flex;gap:8px;margin-top:8px}
+.expbox .btns2 button{flex:1}
+.expbtn+.danger{margin-top:16px}
 .danger{margin-top:22px;background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;text-underline-offset:3px;padding:4px 0}
 .danger.armed{color:var(--bad);font-weight:700}
 .unlockbar{display:flex;align-items:center;gap:10px;margin:0 0 16px;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;font-size:13px}
@@ -266,6 +273,12 @@ h1{margin:0;font-size:20px;font-weight:700;line-height:1.2}
       <span><i class="dot lv-ok"></i>Dominat</span>
     </div>
     <p class="note">Un kana queda dominat quan l'encertes 3 cops seguits a Reconèixer i 3 cops seguits a Escriure. Toca el nom d'una fila per incloure-la o treure-la. Toca un kana per veure'n l'ordre dels traços.</p>
+    <button class="ghostbtn expbtn" id="exp">Exporta el progrés</button>
+    <div class="expbox" id="expBox" hidden>
+      <p id="expMsg"></p>
+      <textarea id="expTxt" readonly spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+      <div class="btns2"><button class="ghostbtn" id="expCopy">Copia</button><button class="ghostbtn" id="expClose">Tanca</button></div>
+    </div>
     <button class="danger" id="reset">Esborra el progrés</button>
   </section>
 
@@ -1053,6 +1066,35 @@ $('#quick').addEventListener('click', function(e){
   var c=e.target.closest('[data-q]'); if(!c) return;
   var q=c.getAttribute('data-q'); P().rows = q==='base' ? BASE_IDS.slice() : q==='all' ? ALL_IDS.slice() : []; save(); renderChart();
 });
+/* ================= Exporta el progrés ================= */
+function exportText(){
+  var d=new Date(), pad=function(n){ return (n<10?'0':'')+n; };
+  var stamp=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes());
+  return JSON.stringify({app:'kana-al-dit', fmt:1, date:stamp, data:S});
+}
+function copyText(t, done){
+  var ta=$('#expTxt');
+  function fallback(){
+    try{ ta.focus(); ta.setSelectionRange(0, t.length); var ok=document.execCommand('copy'); done(!!ok); }catch(e){ done(false); }
+  }
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(function(){ done(true); }, fallback); }
+    else fallback();
+  }catch(e){ fallback(); }
+}
+$('#exp').addEventListener('click', function(){
+  var t=exportText(); $('#expTxt').value=t; $('#expBox').hidden=false;
+  $('#expMsg').textContent='Copiant…';
+  copyText(t, function(ok){
+    $('#expMsg').textContent = ok ? 'Progrés copiat. Enganxa\'l a Notes per desar-lo.' : 'No s\'ha pogut copiar sol. Toca el text, selecciona-ho tot i copia.';
+    if(!ok){ try{ $('#expTxt').focus(); $('#expTxt').setSelectionRange(0, t.length); }catch(e){} }
+  });
+});
+$('#expCopy').addEventListener('click', function(){
+  var t=$('#expTxt').value; copyText(t, function(ok){ $('#expMsg').textContent = ok ? 'Copiat.' : 'No s\'ha pogut copiar sol. Toca el text, selecciona-ho tot i copia.'; });
+});
+$('#expClose').addEventListener('click', function(){ $('#expBox').hidden=true; $('#expTxt').value=''; });
+
 var resetBtn=$('#reset'), armTimer=null;
 function resetLabel(){ return 'Esborra el progrés de '+(SCRIPT==='K'?'katakana':'hiragana'); }
 resetBtn.addEventListener('click', function(){
